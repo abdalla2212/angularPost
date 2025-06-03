@@ -1,6 +1,6 @@
 export interface Iuser{
-  _userAddress: any;
+  _userAddress: string;
   userName:string;
-userAge:number;
-userImage:string;
+  userAge:number;
+  userImage:string;
 }
