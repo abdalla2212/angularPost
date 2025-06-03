@@ -8,8 +8,7 @@
     "start:server": "node server.js",
     "dev": "nodemon server.js",
     "json-server": "json-server --watch db.json --port 3000",
-    "build": "ng build --configuration=production",
-    "build:server": "node server.js"
+    "build": "ng build --configuration=production"
   },
   "dependencies": {
     "@angular/common": "^20.0.0",
