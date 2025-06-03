@@ -1,0 +1,218 @@
+<!--
+<h2>🌍 Discover Your Next Destination</h2>
+
+<div class="card-container">
+  <div class="card">
+    <img src="../../../assets/8-rsz-01102019165043055.jpg" alt="Destination 1">
+    <div class="card-content">
+      <h3>Swiss Alps</h3>
+      <p>Snowy peaks, scenic hikes, and unforgettable alpine adventures.</p>
+      <a href="#" class="btn">Explore</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="../../../assets/a-maldives-escape-to-remember-romantic-getaways-at-sun-siyam-resorts.webp" alt="Destination 2">
+    <div class="card-content">
+      <h3>Maldives Escape</h3>
+      <p>Crystal-clear waters, white sand beaches, and luxurious resorts.</p>
+      <a href="#" class="btn">Book Now</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <img src="../../../assets/dubai-tours-for-uk-national.jpg" alt="Destination 3">
+    <div class="card-content">
+      <h3>Dubai Adventure</h3>
+      <p>City skylines, desert safaris, and thrilling urban experiences.</p>
+      <a href="#" class="btn">Discover</a>
+    </div>
+  </div>
+</div>
+
+ -->
+<button class="add-post-btn" (click)="showAddForm = true">
+  <i class="bi bi-plus-lg"></i>
+</button>
+
+<div class="card-container" *ngIf="post">
+  <div class="card-header">
+    <div class="d-flex justify-content-between align-items-center">
+      <app-user-data [post]="post"></app-user-data>
+      <div class="action-buttons">
+        <button class="btn btn-link" (click)="onEdit()">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-link text-danger" (click)="onDelete()">
+          <i class="bi bi-trash"></i>
+        </button>
+        <button class="btn btn-link">
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-content">
+    <img [src]="getImageUrl(post.postImage)" class="post-image" [alt]="post.title">
+    <h3 class="post-title">{{post.title}}</h3>
+    <div class="card-body">
+      <p class="card-text">
+        {{ truncatedDescription }}
+        <button *ngIf="post.postDescription && post.postDescription.length > maxDescriptionLength"
+                class="btn btn-link p-0 ml-2"
+                (click)="toggleDescription()">
+          {{ isDescriptionExpanded ? 'Show Less' : 'Read More' }}
+        </button>
+      </p>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center">
+      <button class="btn like-btn" [ngClass]="{'liked': post.isLiked}" (click)="onclicklike()">
+        <i class="bi" [ngClass]="{
+          'bi-heart-fill': post.isLiked,
+          'bi-heart': !post.isLiked
+        }"></i>
+        {{post.isLiked ? 'Liked' : 'Like'}}
+      </button>
+      <button class="btn comment-btn" (click)="showCommentModal()">
+        <i class="bi bi-chat"></i>
+        Comment
+      </button>
+    </div>
+
+    <!-- Comment Input -->
+    <div class="mt-4" *ngIf="showCommentForm">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Write a comment..." [(ngModel)]="newComment" (keyup.enter)="addComment()">
+        <button class="btn comment-btn" (click)="addComment()">Comments</button>
+      </div>
+    </div>
+
+    <!-- Comments List -->
+    <div class="comments-section" *ngIf="post.comments && post.comments.length > 0">
+      <h6 class="mb-3">Comments</h6>
+      <div class="comment-item" *ngFor="let comment of post.comments">
+        <p class="mb-0">{{comment}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Post Modal -->
+<div class="modal-overlay" *ngIf="showEditForm">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Post</h5>
+      <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="saveEdit()" #editForm="ngForm">
+        <div class="mb-3">
+          <label for="editUserName" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="editUserName" name="userName" [(ngModel)]="editedPost.userName" required>
+        </div>
+        <div class="mb-3">
+          <label for="editUserImage" class="form-label">Profile Image</label>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Enter image URL" [(ngModel)]="editedPost.userImage" (input)="onProfileImageUrlChange($event, true)" name="editUserImage">
+            <span class="input-group-text">OR</span>
+            <input type="file" class="form-control" accept="image/*" (change)="onProfileImageSelected($event, true)" name="editUserImageFile">
+          </div>
+          <div class="image-preview mt-2" *ngIf="editProfilePreviewUrl">
+            <img [src]="editProfilePreviewUrl" class="img-thumbnail" style="max-height: 100px; width: 100px; object-fit: cover;">
+          </div>
+          <div class="text-center mt-2" *ngIf="isUploading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-1">Uploading image...</p>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="editTitle" class="form-label">Post Title</label>
+          <input type="text" class="form-control" id="editTitle" name="title" [(ngModel)]="editedPost.title" required>
+        </div>
+        <div class="mb-3">
+          <label for="editDescription" class="form-label">Post Description</label>
+          <textarea class="form-control" id="editDescription" name="postDescription" [(ngModel)]="editedPost.postDescription" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="editImage" class="form-label">Post Image</label>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Enter image URL" [(ngModel)]="editedPost.postImage" (input)="onPostImageUrlChange($event, true)" name="editPostImage">
+            <span class="input-group-text">OR</span>
+            <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event, 'post', true)" name="editPostImageFile">
+          </div>
+          <div class="image-preview mt-2" *ngIf="editPreviewUrl">
+            <img [src]="editPreviewUrl" class="img-thumbnail" style="max-height: 200px;">
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="cancelEdit()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!editForm.form.valid">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Add Post Modal -->
+<div class="modal-overlay" *ngIf="showAddForm">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Add New Post</h5>
+      <button type="button" class="btn-close" (click)="showAddForm = false"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="addNewPost()" #postForm="ngForm">
+        <div class="mb-3">
+          <label for="userName" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="newPost.userName" required>
+        </div>
+        <div class="mb-3">
+          <label for="userImage" class="form-label">Profile Image</label>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Enter image URL" [(ngModel)]="newPost.userImage" (input)="onProfileImageUrlChange($event)" name="userImage">
+            <span class="input-group-text">OR</span>
+            <input type="file" class="form-control" accept="image/*" (change)="onProfileImageSelected($event)" name="userImageFile">
+          </div>
+          <div class="image-preview mt-2" *ngIf="profilePreviewUrl">
+            <img [src]="profilePreviewUrl" class="img-thumbnail" style="max-height: 100px; width: 100px; object-fit: cover;">
+          </div>
+          <div class="text-center mt-2" *ngIf="isUploading">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-1">Uploading image...</p>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="title" class="form-label">Post Title</label>
+          <input type="text" class="form-control" id="title" name="title" [(ngModel)]="newPost.title" required>
+        </div>
+        <div class="mb-3">
+          <label for="postDescription" class="form-label">Post Description</label>
+          <textarea class="form-control" id="postDescription" name="postDescription" [(ngModel)]="newPost.postDescription" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="postImage" class="form-label">Post Image</label>
+          <div class="input-group mb-2">
+            <input type="text" class="form-control" placeholder="Enter image URL" [(ngModel)]="newPost.postImage" (input)="onPostImageUrlChange($event)" name="postImage">
+            <span class="input-group-text">OR</span>
+            <input type="file" class="form-control" accept="image/*" (change)="onFileSelected($event, 'post')" name="postImageFile">
+          </div>
+          <div class="image-preview mt-2" *ngIf="previewUrl">
+            <img [src]="previewUrl" class="img-thumbnail" style="max-height: 200px;">
+          </div>
+        </div>
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="showAddForm = false">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!postForm.form.valid">Add Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--  -->

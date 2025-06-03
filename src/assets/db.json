@@ -1,0 +1,39 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "userName": "Ahmed Mohamed",
+      "userImage": "https://i.pravatar.cc/150?img=1",
+      "title": "My First Post",
+      "postDescription": "This is my first post on this amazing platform! I'm excited to share my thoughts and experiences with everyone.",
+      "postImage": "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=1000&auto=format&fit=crop",
+      "createdAt": "2024-03-20T10:00:00.000Z",
+      "isLiked": false,
+      "comments": [
+        "Welcome to the platform! Looking forward to more posts from you."
+      ]
+    },
+    {
+      "id": "2",
+      "userName": "Abdullah",
+      "userImage": "assets/img/pro.jpg",
+      "title": "My Web Development Journey",
+      "postDescription": "This is my first post on this amazing platform! I'm excited to share my thoughts and experiences with everyone",
+      "postImage": "https://media.cnn.com/api/v1/images/stellar/prod/180219103122-zanzibar-and-its-islands-mnemba-a-view-from-the-sky-mnemba-island-lodge.jpg?q=w_1600,h_900,x_0,y_0,c_fill",
+      "createdAt": "2024-03-20T10:00:00.000Z",
+      "isLiked": true,
+      "comments": []
+    },
+    {
+      "id": "1748931906938",
+      "userName": "Ahmed Safwat",
+      "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxGhXTEp-G9Z1SBNez2KK6gAeeIbMfRgz-FQ&s",
+      "title": "Ahmed Safwat",
+      "postDescription": "Ahmed Safwat",
+      "postImage": "https://media.cnn.com/api/v1/images/stellar/prod/180219103122-zanzibar-and-its-islands-mnemba-a-view-from-the-sky-mnemba-island-lodge.jpg?q=w_1600,h_900,x_0,y_0,c_fill",
+      "createdAt": "2025-06-03T06:25:06.938Z",
+      "isLiked": false,
+      "comments": []
+    }
+  ]
+}

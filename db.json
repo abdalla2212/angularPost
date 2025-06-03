@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "userName": "Ahmed Mohamed",
+      "userImage": "https://i.pravatar.cc/150?img=1",
+      "title": "My First Post",
+      "postDescription": "This is my first post on this amazing platform! I'm excited to share my thoughts and experiences with everyone.",
+      "postImage": "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=1000&auto=format&fit=crop",
+      "createdAt": "2024-03-20T10:00:00.000Z",
+      "isLiked": false,
+      "comments": [
+        "Welcome to the platform! Looking forward to more posts from you."
+      ]
+    },
+    {
+      "id": "3b6b",
+      "userName": "abdullah",
+      "userImage": "assets/img/pro.jpg",
+      "title": "abdullah",
+      "postDescription": "his is my first post on this amazing platform! I'm excited to share my thoughts and experiences with everyone",
+      "postImage": "https://media.cnn.com/api/v1/images/stellar/prod/180219103122-zanzibar-and-its-islands-mnemba-a-view-from-the-sky-mnemba-island-lodge.jpg?q=w_1600,h_900,x_0,y_0,c_fill",
+      "createdAt": "2025-06-03T00:21:32.544Z",
+      "isLiked": true,
+      "comments": []
+    },
+    {
+      "id": "1748965973427",
+      "userName": "Ahmed Safwat",
+      "userImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxGhXTEp-G9Z1SBNez2KK6gAeeIbMfRgz-FQ&s",
+      "title": "My First Post",
+      "postDescription": "Today marks a special moment for me as I publish my very first post on this platform. I’ve been thinking about taking this step for a while, and finally, here I am—sharing my thoughts, stories, and experiences with all of you. This post is not just a beginning; it’s an invitation to connect, reflect, and grow together. I believe every person has a voice worth hearing, and I’m excited to use this space to express mine.\n\nWhether it’s about life, work, creativity, or just daily reflections, I’ll be writing with honesty and passion. I hope to inspire, inform, and maybe even entertain along the way. Everyone has a story, and this is where mine begins. I look forward to engaging with others, learning from your insights, and being part of a community that values authenticity and kindness.\n\nThank you for stopping by and reading my first post. I’d love to hear your thoughts—feel free to comment or message me anytime. Here’s to new beginnings and the start of something meaningful. Let’s make this journey unforgettable together!\n\n",
+      "postImage": "https://media.cnn.com/api/v1/images/stellar/prod/180219103122-zanzibar-and-its-islands-mnemba-a-view-from-the-sky-mnemba-island-lodge.jpg?q=w_1600,h_900,x_0,y_0,c_fill",
+      "createdAt": "2025-06-03T15:52:53.427Z",
+      "isLiked": false,
+      "comments": []
+    }
+  ],
+  "deletedPosts": []
+}

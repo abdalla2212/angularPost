@@ -1,0 +1,35 @@
+<!-- Attribute Directives -->
+
+<!--
+1- NgClass
+2- NgStyle
+-->
+
+<!-- <div [ngClass]="{
+    'not-active': !isActive,
+    'active': isActive
+}">
+<button class="btn btn-dark" (click)="isActive = !isActive">Switch User Activation</button>
+</div> -->
+
+<div [ngStyle]="{
+  backgroundColor: isActive ? 'green' : 'red',
+  height: '500px'
+}">
+<button class="btn btn-dark" (click)="isActive = !isActive">Switch User Activation</button>
+</div>
+
+<!-- Structural Directives -->
+
+<!-- ngIf -->
+
+<h1 *ngIf="isActive">Hello User</h1>
+
+<!-- ngFor
+-->
+<h2>Users Posts</h2>
+
+<ng-container *ngFor="let post of userPosts; let i = index">
+  <h2 class="ps-4">{{i}}</h2>
+  <h3 *ngIf="post !== 'Post 2'"  class="border border-black border-1 rounded p-3 m-3">{{post}}</h3>
+</ng-container>

@@ -1,0 +1,13 @@
+.not-active {
+  width: 100%;
+  height: 500px;
+
+  background-color: tomato;
+}
+
+.active {
+  width: 100%;
+  height: 500px;
+
+  background-color: green;
+}

@@ -1,0 +1,71 @@
+img {
+  width: 100%;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.user-info h5 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.user-info small {
+  color: #666;
+}
+
+.post-image {
+  margin: 1rem 0;
+}
+
+.post-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.post-content {
+  margin: 1rem 0;
+}
+
+.post-content h4 {
+  margin-bottom: 0.5rem;
+}
+
+.post-actions {
+  margin-top: 1rem;
+}
+
+.post-actions button {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.post-actions button.liked {
+  color: #e91e63;
+}
+
+.post-actions button:hover {
+  color: #e91e63;
+}

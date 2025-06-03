@@ -1,0 +1,23 @@
+<!-- String Interpoluation {{}} -->
+
+<h1 class="text-bg-success">User Name: {{user.userName}}</h1>
+
+<!-- Property Binding [] -->
+
+<img [src]="user.userImage" width="100" />
+
+<!-- Event Binding () -->
+
+<div>
+    <button class="btn btn-success w-100" (click)="sayHello($event)">Say Hello</button>
+</div>
+
+<!-- Two Ways Binding [()] Banna in the box -->
+
+<!-- Regular Way -->
+<!-- <h2 class="my-2">Say any thing: {{message}}</h2>
+<input class="form-control" (input)="onInput($event)" /> -->
+
+<!-- Two Ways Binding -->
+<h2 class="my-2">Say any thing: {{message}}</h2>
+<input class="form-control" [(ngModel)]="message" />

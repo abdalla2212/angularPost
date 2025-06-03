@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center gap-2">
+  <img [src]="post.userImage" class="rounded-circle user-image" alt="User" />
+  <div class="user-info">
+    <span class="user-name">{{post.userName}}</span>
+    <span class="post-date">{{post.createdAt | date:'medium'}}</span>
+  </div>
+</div>
