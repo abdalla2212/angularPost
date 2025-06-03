@@ -33,39 +33,15 @@ function saveData(data) {
   }
 }
 
-// In-memory database
-let posts = [
-  {
-    id: '1',
-    userName: 'John Doe',
-    userImage: 'https://i.pravatar.cc/150?img=1',
-    title: 'Amazing Sunset',
-    postDescription: 'Beautiful sunset view from my balcony today. The colors are absolutely breathtaking!',
-    postImage: 'https://images.unsplash.com/photo-1501854140801-50d01698950b',
-    createdAt: new Date().toISOString(),
-    isLiked: false,
-    comments: ['Great shot!', 'Beautiful colors!']
-  },
-  {
-    id: '2',
-    userName: 'Jane Smith',
-    userImage: 'https://i.pravatar.cc/150?img=2',
-    title: 'Mountain Adventure',
-    postDescription: 'Just completed an amazing hiking trip in the mountains. The view from the top was worth every step!',
-    postImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b',
-    createdAt: new Date().toISOString(),
-    isLiked: true,
-    comments: ['Looks amazing!', 'Which mountain is this?']
-  }
-];
-
 // Routes
 app.get('/posts', (req, res) => {
-  res.json(posts);
+  const data = readData();
+  res.json(data.posts);
 });
 
 app.get('/posts/:id', (req, res) => {
-  const post = posts.find(p => p.id === req.params.id);
+  const data = readData();
+  const post = data.posts.find(p => p.id === req.params.id);
   if (post) {
     res.json(post);
   } else {
@@ -74,6 +50,7 @@ app.get('/posts/:id', (req, res) => {
 });
 
 app.post('/posts', (req, res) => {
+  const data = readData();
   const newPost = {
     ...req.body,
     id: Date.now().toString(),
@@ -81,24 +58,29 @@ app.post('/posts', (req, res) => {
     isLiked: false,
     comments: []
   };
-  posts.push(newPost);
+  data.posts.push(newPost);
+  saveData(data);
   res.status(201).json(newPost);
 });
 
 app.put('/posts/:id', (req, res) => {
-  const index = posts.findIndex(p => p.id === req.params.id);
+  const data = readData();
+  const index = data.posts.findIndex(p => p.id === req.params.id);
   if (index !== -1) {
-    posts[index] = { ...posts[index], ...req.body };
-    res.json(posts[index]);
+    data.posts[index] = { ...data.posts[index], ...req.body };
+    saveData(data);
+    res.json(data.posts[index]);
   } else {
     res.status(404).json({ message: 'Post not found' });
   }
 });
 
 app.delete('/posts/:id', (req, res) => {
-  const index = posts.findIndex(p => p.id === req.params.id);
+  const data = readData();
+  const index = data.posts.findIndex(p => p.id === req.params.id);
   if (index !== -1) {
-    posts.splice(index, 1);
+    data.posts.splice(index, 1);
+    saveData(data);
     res.status(204).send();
   } else {
     res.status(404).json({ message: 'Post not found' });
@@ -107,44 +89,29 @@ app.delete('/posts/:id', (req, res) => {
 
 // Get all deleted posts
 app.get('/deletedPosts', (req, res) => {
-  try {
-    const data = readData();
-    res.json(data.deletedPosts);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Error reading deleted posts' });
-  }
+  const data = readData();
+  res.json(data.deletedPosts);
 });
 
 // Add to deleted posts
 app.post('/deletedPosts', (req, res) => {
-  try {
-    const data = readData();
-    data.deletedPosts.push(req.body);
-    saveData(data);
-    res.status(201).json(req.body);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Error saving deleted post' });
-  }
+  const data = readData();
+  data.deletedPosts.push(req.body);
+  saveData(data);
+  res.status(201).json(req.body);
 });
 
 // Delete from deleted posts
 app.delete('/deletedPosts/:id', (req, res) => {
-  try {
-    const data = readData();
-    const postIndex = data.deletedPosts.findIndex(p => p.id === req.params.id);
-    if (postIndex === -1) {
-      return res.status(404).json({ error: 'Deleted post not found' });
-    }
-    const deletedPost = data.deletedPosts[postIndex];
-    data.deletedPosts.splice(postIndex, 1);
-    saveData(data);
-    res.json(deletedPost);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Error removing deleted post' });
+  const data = readData();
+  const postIndex = data.deletedPosts.findIndex(p => p.id === req.params.id);
+  if (postIndex === -1) {
+    return res.status(404).json({ error: 'Deleted post not found' });
   }
+  const deletedPost = data.deletedPosts[postIndex];
+  data.deletedPosts.splice(postIndex, 1);
+  saveData(data);
+  res.json(deletedPost);
 });
 
 // Start server
